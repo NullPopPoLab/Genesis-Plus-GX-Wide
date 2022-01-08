@@ -3078,15 +3078,15 @@ bool retro_load_game(const struct retro_game_info *info)
       save_dir = g_rom_dir;
    }
 
-   snprintf(GG_ROM, sizeof(GG_ROM), "%s%cggenie.bin", dir, slash);
-   snprintf(AR_ROM, sizeof(AR_ROM), "%s%careplay.bin", dir, slash);
-   snprintf(SK_ROM, sizeof(SK_ROM), "%s%csk.bin", dir, slash);
-   snprintf(SK_UPMEM, sizeof(SK_UPMEM), "%s%csk2chip.bin", dir, slash);
-   snprintf(MD_BIOS, sizeof(MD_BIOS), "%s%cbios_MD.bin", dir, slash);
-   snprintf(GG_BIOS, sizeof(GG_BIOS), "%s%cbios.gg", dir, slash);
-   snprintf(MS_BIOS_EU, sizeof(MS_BIOS_EU), "%s%cbios_E.sms", dir, slash);
-   snprintf(MS_BIOS_US, sizeof(MS_BIOS_US), "%s%cbios_U.sms", dir, slash);
-   snprintf(MS_BIOS_JP, sizeof(MS_BIOS_JP), "%s%cbios_J.sms", dir, slash);
+   snprintf(GG_ROM, sizeof(GG_ROM), "%s%cmegadrive%cggenie.bin", dir, slash, slash);
+   snprintf(AR_ROM, sizeof(AR_ROM), "%s%cmegadrive%careplay.bin", dir, slash, slash);
+   snprintf(SK_ROM, sizeof(SK_ROM), "%s%cmegadrive%csk.bin", dir, slash, slash);
+   snprintf(SK_UPMEM, sizeof(SK_UPMEM), "%s%cmegadrive%csk2chip.bin", dir, slash, slash);
+   snprintf(MD_BIOS, sizeof(MD_BIOS), "%s%cmegadrive%cbios_MD.bin", dir, slash, slash);
+   snprintf(GG_BIOS, sizeof(GG_BIOS), "%s%cgamegear%cbios.gg", dir, slash, slash);
+   snprintf(MS_BIOS_EU, sizeof(MS_BIOS_EU), "%s%cmastersystem%cbios_E.sms", dir, slash, slash);
+   snprintf(MS_BIOS_US, sizeof(MS_BIOS_US), "%s%cmastersystem%cbios_U.sms", dir, slash, slash);
+   snprintf(MS_BIOS_JP, sizeof(MS_BIOS_JP), "%s%cmastersystem%cbios_J.sms", dir, slash, slash);
    snprintf(CD_BIOS_EU, sizeof(CD_BIOS_EU), "%s%csegacd%cbios_CD_E.bin", dir, slash, slash);
    snprintf(CD_BIOS_US, sizeof(CD_BIOS_US), "%s%csegacd%cbios_CD_U.bin", dir, slash, slash);
    snprintf(CD_BIOS_JP, sizeof(CD_BIOS_JP), "%s%csegacd%cbios_CD_J.bin", dir, slash, slash);
