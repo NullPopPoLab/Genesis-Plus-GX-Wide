@@ -3087,9 +3087,9 @@ bool retro_load_game(const struct retro_game_info *info)
    snprintf(MS_BIOS_EU, sizeof(MS_BIOS_EU), "%s%cmastersystem%cbios_E.sms", dir, slash, slash);
    snprintf(MS_BIOS_US, sizeof(MS_BIOS_US), "%s%cmastersystem%cbios_U.sms", dir, slash, slash);
    snprintf(MS_BIOS_JP, sizeof(MS_BIOS_JP), "%s%cmastersystem%cbios_J.sms", dir, slash, slash);
-   snprintf(CD_BIOS_EU, sizeof(CD_BIOS_EU), "%s%csegacd%cbios_CD_E.bin", dir, slash, slash);
-   snprintf(CD_BIOS_US, sizeof(CD_BIOS_US), "%s%csegacd%cbios_CD_U.bin", dir, slash, slash);
-   snprintf(CD_BIOS_JP, sizeof(CD_BIOS_JP), "%s%csegacd%cbios_CD_J.bin", dir, slash, slash);
+   snprintf(CD_BIOS_EU, sizeof(CD_BIOS_EU), "%s%cmegadrive%cbios_CD_E.bin", dir, slash, slash);
+   snprintf(CD_BIOS_US, sizeof(CD_BIOS_US), "%s%cmegadrive%cbios_CD_U.bin", dir, slash, slash);
+   snprintf(CD_BIOS_JP, sizeof(CD_BIOS_JP), "%s%cmegadrive%cbios_CD_J.bin", dir, slash, slash);
    snprintf(CART_BRAM, sizeof(CART_BRAM), "%s%ccart.brm", save_dir, slash);
 
    check_variables(true);
