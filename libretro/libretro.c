@@ -55,6 +55,7 @@
 #endif
 
 #define CORE_NAME "genesis_plus_gx_wide"
+#define CUSTOM_VERSION "+NC41"
 
 #define RETRO_DEVICE_MDPAD_3B             RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 0)
 #define RETRO_DEVICE_MDPAD_6B             RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 1)
@@ -3020,7 +3021,7 @@ void retro_get_system_info(struct retro_system_info *info)
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
 #endif
-   info->library_version = "v1.7.4" GIT_VERSION;
+   info->library_version = "v1.7.4" GIT_VERSION CUSTOM_VERSION;
    info->valid_extensions = "m3u|mdx|md|smd|gen|bin|cue|iso|chd|bms|sms|gg|sg|68k|sgd";
    info->block_extract = false;
    info->need_fullpath = true;
