@@ -65,6 +65,7 @@
 #define RETRO_DEVICE_MDPAD_3B_TEAMPLAYER  RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 5)
 #define RETRO_DEVICE_MDPAD_6B_TEAMPLAYER  RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 6)
 #define RETRO_DEVICE_MSPAD_2B_MASTERTAP   RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 7)
+#define RETRO_DEVICE_JOYPAD_DUAL          RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_JOYPAD, 8)
 #define RETRO_DEVICE_PADDLE               RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_ANALOG, 0)
 #define RETRO_DEVICE_SPORTSPAD            RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_ANALOG, 1)
 #define RETRO_DEVICE_XE_1AP               RETRO_DEVICE_SUBCLASS(RETRO_DEVICE_ANALOG, 2)
@@ -223,6 +224,8 @@ static bool update_audio_latency           = false;
 #ifdef USE_PER_SOUND_CHANNELS_CONFIG
 static bool show_advanced_av_settings      = true;
 #endif
+
+static bool joypad_dual=false;
 
 #define TURBO_A 0
 #define TURBO_B 1
@@ -496,6 +499,35 @@ static void osd_input_update_internal_bitmasks(void)
    unsigned int temp;
    int32_t ret = input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_MASK);
 
+	if(joypad_dual){
+		input.pad[0]=input.pad[1]=0;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_UP))input.pad[0]|=INPUT_UP;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_DOWN))input.pad[0]|=INPUT_DOWN;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_LEFT))input.pad[0]|=INPUT_LEFT;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_RIGHT))input.pad[0]|=INPUT_RIGHT;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_L0))input.pad[0]|=INPUT_A;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_L))input.pad[0]|=INPUT_B;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_L2))input.pad[0]|=INPUT_C;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_L4))input.pad[0]|=INPUT_X;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_L5))input.pad[0]|=INPUT_Y;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_G1))input.pad[0]|=INPUT_Z;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_G3))input.pad[0]|=INPUT_MODE;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_SELECT))input.pad[0]|=INPUT_START;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_X))input.pad[1]|=INPUT_UP;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_B))input.pad[1]|=INPUT_DOWN;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_Y))input.pad[1]|=INPUT_LEFT;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_A))input.pad[1]|=INPUT_RIGHT;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R0))input.pad[1]|=INPUT_A;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R))input.pad[1]|=INPUT_B;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R2))input.pad[1]|=INPUT_C;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R4))input.pad[1]|=INPUT_X;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_R5))input.pad[1]|=INPUT_Y;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_G2))input.pad[1]|=INPUT_Z;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_G4))input.pad[1]|=INPUT_MODE;
+        if (ret & (1 << RETRO_DEVICE_ID_JOYPAD_START))input.pad[1]|=INPUT_START;
+		return;
+	}
+
    for (i = 0; i < MAX_INPUTS; i++)
    {
       temp = 0;
@@ -751,6 +783,35 @@ static void osd_input_update_internal(void)
 {
    int i, player = 0;
    unsigned int temp;
+
+	if(joypad_dual){
+		input.pad[0]=input.pad[1]=0;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP))input.pad[0]|=INPUT_UP;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN))input.pad[0]|=INPUT_DOWN;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT))input.pad[0]|=INPUT_LEFT;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT))input.pad[0]|=INPUT_RIGHT;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L0))input.pad[0]|=INPUT_A;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L))input.pad[0]|=INPUT_B;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2))input.pad[0]|=INPUT_C;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L4))input.pad[0]|=INPUT_X;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L5))input.pad[0]|=INPUT_Y;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G1))input.pad[0]|=INPUT_Z;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G3))input.pad[0]|=INPUT_MODE;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT))input.pad[0]|=INPUT_START;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X))input.pad[1]|=INPUT_UP;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B))input.pad[1]|=INPUT_DOWN;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y))input.pad[1]|=INPUT_LEFT;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A))input.pad[1]|=INPUT_RIGHT;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R0))input.pad[1]|=INPUT_A;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R))input.pad[1]|=INPUT_B;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2))input.pad[1]|=INPUT_C;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R4))input.pad[1]|=INPUT_X;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R5))input.pad[1]|=INPUT_Y;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G2))input.pad[1]|=INPUT_Z;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G4))input.pad[1]|=INPUT_MODE;
+        if (input_state_cb(player, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START))input.pad[1]|=INPUT_START;
+		return;
+	}
 
    for (i = 0; i < MAX_INPUTS; i++)
    {
@@ -2862,57 +2923,7 @@ static struct retro_disk_control_callback disk_ctrl =
  ************************************/
 unsigned retro_api_version(void) { return RETRO_API_VERSION; }
 
-void retro_set_environment(retro_environment_t cb)
-{
-   bool option_categories = false;
-   struct retro_vfs_interface_info vfs_iface_info;
-   struct retro_led_interface led_interface;
-
-   static const struct retro_controller_description port_1[] = {
-      { "Joypad Auto", RETRO_DEVICE_JOYPAD },
-      { "Joypad Port Empty", RETRO_DEVICE_NONE },
-      { "MD Joypad 3 Button", RETRO_DEVICE_MDPAD_3B },
-      { "MD Joypad 6 Button", RETRO_DEVICE_MDPAD_6B },
-      { "MS Joypad 2 Button", RETRO_DEVICE_MSPAD_2B },
-      { "MD Joypad 3 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_3B_WAYPLAY },
-      { "MD Joypad 6 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_6B_WAYPLAY },
-      { "MD Joypad 3 Button + Teamplayer", RETRO_DEVICE_MDPAD_3B_TEAMPLAYER },
-      { "MD Joypad 6 Button + Teamplayer", RETRO_DEVICE_MDPAD_6B_TEAMPLAYER },
-      { "MS Joypad 2 Button + Master Tap", RETRO_DEVICE_MSPAD_2B_MASTERTAP },
-      { "MS Light Phaser", RETRO_DEVICE_PHASER },
-      { "MS Paddle Control", RETRO_DEVICE_PADDLE },
-      { "MS Sports Pad", RETRO_DEVICE_SPORTSPAD },
-      { "MS Graphic Board", RETRO_DEVICE_GRAPHIC_BOARD },
-      { "MD XE-1AP", RETRO_DEVICE_XE_1AP },
-      { "MD Mouse", RETRO_DEVICE_MOUSE },
-   };
-
-   static const struct retro_controller_description port_2[] = {
-      { "Joypad Auto", RETRO_DEVICE_JOYPAD },
-      { "Joypad Port Empty", RETRO_DEVICE_NONE },
-      { "MD Joypad 3 Button", RETRO_DEVICE_MDPAD_3B },
-      { "MD Joypad 6 Button", RETRO_DEVICE_MDPAD_6B },
-      { "MS Joypad 2 Button", RETRO_DEVICE_MSPAD_2B },
-      { "MD Joypad 3 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_3B_WAYPLAY },
-      { "MD Joypad 6 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_6B_WAYPLAY },
-      { "MD Joypad 3 Button + Teamplayer", RETRO_DEVICE_MDPAD_3B_TEAMPLAYER },
-      { "MD Joypad 6 Button + Teamplayer", RETRO_DEVICE_MDPAD_6B_TEAMPLAYER },
-      { "MS Joypad 2 Button + Master Tap", RETRO_DEVICE_MSPAD_2B_MASTERTAP },
-      { "MD Menacer", RETRO_DEVICE_MENACER },
-      { "MD Justifiers", RETRO_DEVICE_JUSTIFIERS },
-      { "MS Light Phaser", RETRO_DEVICE_PHASER },
-      { "MS Paddle Control", RETRO_DEVICE_PADDLE },
-      { "MS Sports Pad", RETRO_DEVICE_SPORTSPAD },
-      { "MS Graphic Board", RETRO_DEVICE_GRAPHIC_BOARD },
-      { "MD XE-1AP", RETRO_DEVICE_XE_1AP },
-      { "MD Mouse", RETRO_DEVICE_MOUSE },
-  };
-
-   static const struct retro_controller_info ports[] = {
-      { port_1, 16 },
-      { port_2, 18 },
-      { 0 },
-   };
+static void retro_set_desc_standard(){
 
    static const struct retro_input_descriptor desc[] = {
       { 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,  "D-Pad Left" },
@@ -3086,6 +3097,101 @@ void retro_set_environment(retro_environment_t cb)
       { 0 },
    };
 
+   environ_cb(RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS, (void*)desc);
+}
+
+static void retro_set_desc_dual(){
+
+	static const struct retro_input_descriptor desc[] = {
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_LEFT,   "P1 D-Pad Left" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_UP,     "P1 D-Pad Up" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_DOWN,   "P1 D-Pad Down" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_RIGHT,  "P1 D-Pad Right" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L0,     "P1 A" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L,      "P1 B" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L2,     "P1 C" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L4,     "P1 X" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_L5,     "P1 Y" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G1,     "P1 Z" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G3,     "P1 Mode" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_SELECT, "P1 Start" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_Y,      "P2 D-Pad Left" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_X,      "P2 D-Pad Up" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_B,      "P2 D-Pad Down" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_A,      "P2 D-Pad Right" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R0,     "P2 A" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R,      "P2 B" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R2,     "P2 C" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R4,     "P2 X" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_R5,     "P2 Y" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G2,     "P2 Z" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_G4,     "P2 Mode" },
+		{ 0, RETRO_DEVICE_JOYPAD, 0, RETRO_DEVICE_ID_JOYPAD_START,  "P2 Start" },
+		{ 0 },
+	};
+
+	environ_cb(RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS, (void *)desc);
+}
+
+static void retro_set_desc(){
+
+	if(joypad_dual)retro_set_desc_dual();
+	else retro_set_desc_standard();
+}
+
+void retro_set_environment(retro_environment_t cb)
+{
+   bool option_categories = false;
+   struct retro_vfs_interface_info vfs_iface_info;
+   struct retro_led_interface led_interface;
+
+   static const struct retro_controller_description port_1[] = {
+      { "Joypad Auto", RETRO_DEVICE_JOYPAD },
+      { "Joypad Port Empty", RETRO_DEVICE_NONE },
+      { "MD Joypad 3 Button", RETRO_DEVICE_MDPAD_3B },
+      { "MD Joypad 6 Button", RETRO_DEVICE_MDPAD_6B },
+      { "MS Joypad 2 Button", RETRO_DEVICE_MSPAD_2B },
+      { "MD Joypad 3 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_3B_WAYPLAY },
+      { "MD Joypad 6 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_6B_WAYPLAY },
+      { "MD Joypad 3 Button + Teamplayer", RETRO_DEVICE_MDPAD_3B_TEAMPLAYER },
+      { "MD Joypad 6 Button + Teamplayer", RETRO_DEVICE_MDPAD_6B_TEAMPLAYER },
+      { "MS Joypad 2 Button + Master Tap", RETRO_DEVICE_MSPAD_2B_MASTERTAP },
+      { "MS Light Phaser", RETRO_DEVICE_PHASER },
+      { "MS Paddle Control", RETRO_DEVICE_PADDLE },
+      { "MS Sports Pad", RETRO_DEVICE_SPORTSPAD },
+      { "MS Graphic Board", RETRO_DEVICE_GRAPHIC_BOARD },
+      { "MD XE-1AP", RETRO_DEVICE_XE_1AP },
+      { "MD Mouse", RETRO_DEVICE_MOUSE },
+      { "Joypad Dual", RETRO_DEVICE_JOYPAD_DUAL },
+   };
+
+   static const struct retro_controller_description port_2[] = {
+      { "Joypad Auto", RETRO_DEVICE_JOYPAD },
+      { "Joypad Port Empty", RETRO_DEVICE_NONE },
+      { "MD Joypad 3 Button", RETRO_DEVICE_MDPAD_3B },
+      { "MD Joypad 6 Button", RETRO_DEVICE_MDPAD_6B },
+      { "MS Joypad 2 Button", RETRO_DEVICE_MSPAD_2B },
+      { "MD Joypad 3 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_3B_WAYPLAY },
+      { "MD Joypad 6 Button + 4-WayPlay", RETRO_DEVICE_MDPAD_6B_WAYPLAY },
+      { "MD Joypad 3 Button + Teamplayer", RETRO_DEVICE_MDPAD_3B_TEAMPLAYER },
+      { "MD Joypad 6 Button + Teamplayer", RETRO_DEVICE_MDPAD_6B_TEAMPLAYER },
+      { "MS Joypad 2 Button + Master Tap", RETRO_DEVICE_MSPAD_2B_MASTERTAP },
+      { "MD Menacer", RETRO_DEVICE_MENACER },
+      { "MD Justifiers", RETRO_DEVICE_JUSTIFIERS },
+      { "MS Light Phaser", RETRO_DEVICE_PHASER },
+      { "MS Paddle Control", RETRO_DEVICE_PADDLE },
+      { "MS Sports Pad", RETRO_DEVICE_SPORTSPAD },
+      { "MS Graphic Board", RETRO_DEVICE_GRAPHIC_BOARD },
+      { "MD XE-1AP", RETRO_DEVICE_XE_1AP },
+      { "MD Mouse", RETRO_DEVICE_MOUSE },
+  };
+
+   static const struct retro_controller_info ports[] = {
+      { port_1, 17 },
+      { port_2, 18 },
+      { 0 },
+   };
+
    static const struct retro_system_content_info_override content_overrides[] = {
       {
          "mdx|md|bin|smd|gen|bms|sms|gg|sg|68k|sgd", /* extensions */
@@ -3126,8 +3232,9 @@ void retro_set_environment(retro_environment_t cb)
    }
 
    cb(RETRO_ENVIRONMENT_SET_CONTROLLER_INFO, (void*)ports);
-   cb(RETRO_ENVIRONMENT_SET_INPUT_DESCRIPTORS, (void*)desc);
    cb(RETRO_ENVIRONMENT_SET_CONTENT_INFO_OVERRIDE, (void*)content_overrides);
+
+	retro_set_desc();
 
    vfs_iface_info.required_interface_version = 2;
    vfs_iface_info.iface                      = NULL;
@@ -3198,11 +3305,24 @@ void retro_set_controller_port_device(unsigned port, unsigned device)
    if (port > 1)
      return;
 
-   switch(device)
+	if (port == 0){
+		bool dual=(device==RETRO_DEVICE_JOYPAD_DUAL);
+		if(dual!=joypad_dual){
+			joypad_dual=dual;
+			retro_set_desc();
+		}
+	}
+
+	if(joypad_dual){
+		input.system[0] = input.system[1] = SYSTEM_GAMEPAD;
+        config.input[0].padtype = config.input[1].padtype = DEVICE_PAD2B | DEVICE_PAD6B | DEVICE_PAD3B;
+	}
+   else switch(device)
    {
       case RETRO_DEVICE_NONE:
          input.system[port] = NO_SYSTEM;
          break;
+
       case RETRO_DEVICE_MDPAD_3B:
       {
          if (port && (input.system[0] >= SYSTEM_MASTERTAP) && (input.system[0] <= SYSTEM_WAYPLAY))
